@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { PIZZA_TABLES, PIZZA_SIZES, PIZZA_CRUST } from '@pizza/data';
+import {
+  PIZZA_TABLES,
+  PIZZA_SIZES,
+  PIZZA_CRUST,
+  PIZZA_FLAVORS,
+} from '@pizza/data';
 import { PizzaOrder } from '@pizza/interfaces';
 import { OrderService } from '@pizza/services';
 import { filter, map, Subscription, switchMap, tap } from 'rxjs';
@@ -16,11 +21,11 @@ export class OrderComponent implements OnDestroy {
   tables = PIZZA_TABLES;
   sizes = PIZZA_SIZES;
   crusts = PIZZA_CRUST;
+  flavors = PIZZA_FLAVORS;
 
   form = this.fb.group({
     Crust: this.fb.control('', Validators.required),
     Flavor: this.fb.control('', Validators.required),
-    // Order_ID: this.fb.control<number | undefined>(undefined),
     Size: this.fb.control('', Validators.required),
     Table_No: this.fb.control<number>(1, Validators.required),
   });
@@ -32,6 +37,7 @@ export class OrderComponent implements OnDestroy {
 
   private sub!: Subscription;
   private canCopy = false;
+  isNew = true;
 
   constructor(
     private fb: NonNullableFormBuilder,
@@ -52,6 +58,7 @@ export class OrderComponent implements OnDestroy {
       .pipe(
         tap((res) => {
           this.canCopy = !!this.route.snapshot.data['copy'];
+          this.isNew = true;
           console.log('FIRE', res, this.canCopy);
         }),
         switchMap((orderId) => this.orderService.getOne(orderId)),
@@ -62,5 +69,20 @@ export class OrderComponent implements OnDestroy {
 
   private patchForm(order: PizzaOrder) {
     this.form.patchValue(order);
+  }
+
+  submitForm(order: Partial<PizzaOrder>) {
+    console.log('submit order', order);
+  }
+
+  // TODO: Convert to a pipe so it doesn't fire as often
+  get submitText(): string {
+    let result = 'Create Order';
+    if (this.canCopy) {
+      result = 'Copy Order';
+    } else if (!this.isNew) {
+      result = 'Save Order';
+    }
+    return result;
   }
 }

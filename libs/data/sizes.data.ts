@@ -1,4 +1,6 @@
-export const PIZZA_SIZES = [
+import { KeyValue } from '@pizza/interfaces';
+
+export const PIZZA_SIZES: KeyValue[] = [
   {
     key: 'Small',
     value: 'S',

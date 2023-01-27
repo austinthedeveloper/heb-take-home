@@ -1,14 +1,16 @@
-export const PIZZA_CRUST = [
+import { KeyValue } from '@pizza/interfaces';
+
+export const PIZZA_CRUST: KeyValue[] = [
   {
     key: 'Normal',
-    value: 'Normal',
+    value: 'NORMAL',
   },
   {
     key: 'Thin',
-    value: 'Thin',
+    value: 'THIN',
   },
   {
     key: 'Deep Dish',
-    value: 'DeepDish',
+    value: 'DEEPDISH',
   },
 ];

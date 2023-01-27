@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app.routing';
 import { APP_CONTAINERS } from './containers';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UiModule } from '@pizza/ui';
+import { PizzaFormsModule } from '@pizza/forms';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
@@ -17,6 +18,7 @@ import { UiModule } from '@pizza/ui';
     ReactiveFormsModule,
     NgbModule,
     UiModule,
+    PizzaFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

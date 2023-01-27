@@ -1,0 +1,8 @@
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">{{ label }}</label>
+  <select class="form-select" [formControl]="control">
+    <option *ngFor="let item of items" [value]="item.value">
+      {{ item.key }}
+    </option>
+  </select>
+</div>
