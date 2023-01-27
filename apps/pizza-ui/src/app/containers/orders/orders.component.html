@@ -1,1 +1,22 @@
-<p>orders works!</p>
+<table class="table" *ngIf="orders$ | async as orders">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Table #</th>
+      <th scope="col">Crust</th>
+      <th scope="col">Flavor</th>
+      <th scope="col">Size</th>
+      <th scope="col">Ordered @</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <th scope="row">{{ order.Order_ID }}</th>
+      <td>{{ order.Table_No }}</td>
+      <td>{{ order.Crust }}</td>
+      <td>{{ order.Flavor }}</td>
+      <td>{{ order.Size }}</td>
+      <td>{{ order.Timestamp | date }}</td>
+    </tr>
+  </tbody>
+</table>

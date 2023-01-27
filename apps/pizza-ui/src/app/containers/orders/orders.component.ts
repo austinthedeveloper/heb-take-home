@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { OrderService } from '@pizza/services';
 
 @Component({
   selector: 'pizza-orders',
@@ -6,4 +7,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./orders.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersComponent {}
+export class OrdersComponent {
+  orders$ = this.orderService.items$;
+
+  constructor(private orderService: OrderService) {}
+}

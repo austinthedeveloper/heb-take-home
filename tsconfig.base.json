@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pizza/data": ["libs/dataindex.ts"],
+      "@pizza/data": ["libs/data/index.ts"],
       "@pizza/interfaces": ["libs/interfaces/index.ts"],
       "@pizza/pipes": ["libs/pipes/src/index.ts"],
       "@pizza/services": ["libs/services/src/index.ts"]
