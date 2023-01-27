@@ -26,6 +26,20 @@ const routes: Routes = [
     },
   },
   {
+    path: 'order/copy/:orderID',
+    component: OrderComponent,
+    data: {
+      pageTitle: 'Copy Order',
+    },
+  },
+  {
+    path: 'order/:orderID',
+    component: OrderComponent,
+    data: {
+      pageTitle: 'Edit Order',
+    },
+  },
+  {
     path: 'login',
     component: LoginComponent,
     data: {

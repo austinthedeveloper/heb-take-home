@@ -7,6 +7,7 @@
       <th scope="col">Flavor</th>
       <th scope="col">Size</th>
       <th scope="col">Ordered @</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -17,6 +18,25 @@
       <td>{{ order.Flavor }}</td>
       <td>{{ order.Size }}</td>
       <td>{{ order.Timestamp | date }}</td>
+      <td>
+        <div ngbDropdown class="d-inline-block">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          ></button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button
+              ngbDropdownItem
+              *ngFor="let action of actions"
+              (click)="onAction(action.value, order.Order_ID)"
+            >
+              {{ action.key }}
+            </button>
+          </div>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -18,7 +18,8 @@
       "@pizza/data": ["libs/data/index.ts"],
       "@pizza/interfaces": ["libs/interfaces/index.ts"],
       "@pizza/pipes": ["libs/pipes/src/index.ts"],
-      "@pizza/services": ["libs/services/src/index.ts"]
+      "@pizza/services": ["libs/services/src/index.ts"],
+      "@pizza/ui": ["libs/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -11,4 +11,8 @@ export class OrderService extends EntityClass<PizzaOrder> {
     super({ key: (order) => order.Order_ID.toString() });
     this.addMany(ORDERS_MOCK);
   }
+
+  removeOrder(orderId: number) {
+    this.removeOne(`${orderId}`);
+  }
 }
