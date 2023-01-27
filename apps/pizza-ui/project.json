@@ -16,7 +16,7 @@
         "tsConfig": "apps/pizza-ui/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/pizza-ui/src/favicon.ico", "apps/pizza-ui/src/assets"],
-        "styles": ["apps/pizza-ui/src/styles.scss"],
+        "styles": ["node_modules/bootstrap/scss/bootstrap.scss", "apps/pizza-ui/src/styles.scss"],
         "scripts": []
       },
       "configurations": {

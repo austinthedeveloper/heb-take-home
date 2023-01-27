@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "start:ui": "ng serve pizza-ui",
-    "start:api": "ng serve pizza-api"
+    "start:ui": "nx serve pizza-ui",
+    "start:api": "nx serve pizza-api"
   },
   "private": true,
   "dependencies": {

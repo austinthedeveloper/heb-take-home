@@ -60,7 +60,7 @@
     "sharedGlobals": []
   },
   "generators": {
-    "@nrwl/angular:application": {
+     "@nrwl/angular:application": {
       "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest",
@@ -68,10 +68,17 @@
     },
     "@nrwl/angular:library": {
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "routing": true,
+      "style": "scss"
     },
     "@nrwl/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "skipImport": true,
+      "changeDetection": "OnPush"
+    },
+    "@schematics/angular:module": {
+      "routing": true
     }
   }
 }
