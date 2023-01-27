@@ -1,4 +1,4 @@
-import { PizzaOrder } from '../interfaces/order.inteface';
+import { PizzaOrder } from '@pizza/interfaces';
 
 export const ORDERS_MOCK: PizzaOrder[] = [
   {
