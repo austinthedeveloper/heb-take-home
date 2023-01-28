@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   PIZZA_TABLES,
   PIZZA_SIZES,
@@ -18,6 +18,8 @@ import { filter, map, Subscription, switchMap, tap } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderComponent implements OnDestroy {
+  loading$ = this.orderService.saving$;
+
   tables = PIZZA_TABLES;
   sizes = PIZZA_SIZES;
   crusts = PIZZA_CRUST;
@@ -37,12 +39,13 @@ export class OrderComponent implements OnDestroy {
 
   private sub!: Subscription;
   private canCopy = false;
-  isNew = true;
+  private id!: number;
 
   constructor(
     private fb: NonNullableFormBuilder,
     private orderService: OrderService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.setSub();
   }
@@ -56,10 +59,9 @@ export class OrderComponent implements OnDestroy {
   private setSub() {
     this.sub = this.orderId$
       .pipe(
-        tap((res) => {
+        tap((orderId) => {
           this.canCopy = !!this.route.snapshot.data['copy'];
-          this.isNew = true;
-          console.log('FIRE', res, this.canCopy);
+          this.id = orderId;
         }),
         switchMap((orderId) => this.orderService.getOne(orderId)),
         tap((order) => this.patchForm(order))
@@ -71,8 +73,19 @@ export class OrderComponent implements OnDestroy {
     this.form.patchValue(order);
   }
 
+  // TODO: I had to force these Partials to act as a full Interface which they are
   submitForm(order: Partial<PizzaOrder>) {
-    console.log('submit order', order);
+    let call = this.orderService.createOrder(order as PizzaOrder);
+    if (this.id && !this.canCopy) {
+      call = this.orderService.saveOrder({
+        ...order,
+        Order_ID: this.id,
+      } as PizzaOrder);
+    }
+
+    call.subscribe(() => {
+      this.router.navigate(['/orders']);
+    });
   }
 
   // TODO: Convert to a pipe so it doesn't fire as often
@@ -80,7 +93,7 @@ export class OrderComponent implements OnDestroy {
     let result = 'Create Order';
     if (this.canCopy) {
       result = 'Copy Order';
-    } else if (!this.isNew) {
+    } else if (this.id) {
       result = 'Save Order';
     }
     return result;
