@@ -17,7 +17,7 @@
       <td>{{ order.Crust }}</td>
       <td>{{ order.Flavor }}</td>
       <td>{{ order.Size }}</td>
-      <td>{{ order.Timestamp | date }}</td>
+      <td>{{ order.Timestamp | date : 'medium' }}</td>
       <td>
         <div ngbDropdown class="d-inline-block">
           <button

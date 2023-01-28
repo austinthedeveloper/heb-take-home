@@ -1,6 +1,11 @@
-<div class="d-flex bg-primary h-100">
+<div class="d-flex h-100">
   <pizza-navigation></pizza-navigation>
-  <div class="bg-info d-flex flex-fill overflow-y p-3">
-    <router-outlet></router-outlet>
+  <div class="d-flex flex-column flex-fill overflow-y p-3">
+    <div>
+      <h1 *ngIf="title$ | async as title">{{ title }}</h1>
+    </div>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

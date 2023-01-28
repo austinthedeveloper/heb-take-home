@@ -25,7 +25,9 @@ export class OrderService extends EntityClass<PizzaOrder> {
     return of(order).pipe(
       first(),
       finalize(() => this.toggleSaving(false)),
-      tap((res) => this.updateOne(res))
+      tap((res) =>
+        this.updateOne({ ...res, Timestamp: new Date().toISOString() })
+      )
     );
   }
   createOrder(order: PizzaOrder) {
@@ -34,7 +36,9 @@ export class OrderService extends EntityClass<PizzaOrder> {
     return of(order).pipe(
       first(),
       finalize(() => this.toggleSaving(false)),
-      tap((res) => this.addOne({ ...res, Order_ID }))
+      tap((res) =>
+        this.addOne({ ...res, Order_ID, Timestamp: new Date().toISOString() })
+      )
     );
   }
 
