@@ -8,9 +8,10 @@ import { APP_CONTAINERS } from './containers';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UiModule } from '@pizza/ui';
 import { PizzaFormsModule } from '@pizza/forms';
+import { APP_PIPES } from './pipes';
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS],
+  declarations: [AppComponent, ...APP_CONTAINERS, ...APP_PIPES],
   imports: [
     BrowserModule,
     AppRoutingModule,

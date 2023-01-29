@@ -1,0 +1,42 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Table #</th>
+      <th scope="col">Crust</th>
+      <th scope="col">Flavor</th>
+      <th scope="col">Size</th>
+      <th scope="col">Ordered @</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <th scope="row">{{ order.Order_ID }}</th>
+      <td>{{ order.Table_No }}</td>
+      <td>{{ order.Crust }}</td>
+      <td>{{ order.Flavor }}</td>
+      <td>{{ order.Size }}</td>
+      <td>{{ order.Timestamp | date : 'medium' }}</td>
+      <td>
+        <div ngbDropdown class="d-inline-block">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          ></button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button
+              ngbDropdownItem
+              *ngFor="let action of actions"
+              (click)="onAction(action.value, order.Order_ID)"
+            >
+              {{ action.key }}
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

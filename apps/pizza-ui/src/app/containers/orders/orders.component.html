@@ -1,42 +1,28 @@
-<table class="table" *ngIf="orders$ | async as orders">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Table #</th>
-      <th scope="col">Crust</th>
-      <th scope="col">Flavor</th>
-      <th scope="col">Size</th>
-      <th scope="col">Ordered @</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let order of orders">
-      <th scope="row">{{ order.Order_ID }}</th>
-      <td>{{ order.Table_No }}</td>
-      <td>{{ order.Crust }}</td>
-      <td>{{ order.Flavor }}</td>
-      <td>{{ order.Size }}</td>
-      <td>{{ order.Timestamp | date : 'medium' }}</td>
-      <td>
-        <div ngbDropdown class="d-inline-block">
-          <button
-            type="button"
-            class="btn btn-outline-primary"
-            id="dropdownBasic1"
-            ngbDropdownToggle
-          ></button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button
-              ngbDropdownItem
-              *ngFor="let action of actions"
-              (click)="onAction(action.value, order.Order_ID)"
-            >
-              {{ action.key }}
-            </button>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="mb-3">
+  <h3>Current Orders</h3>
+  <ng-container
+    *ngIf="
+      ((orders$ | async)! | currentOrders : true).length;
+      else noCurrentOrders
+    "
+  >
+    <pizza-orders-table
+      [orders]="(orders$ | async)! | currentOrders : true"
+      (actionClicked)="onAction($event.action, $event.orderId)"
+    ></pizza-orders-table>
+  </ng-container>
+  <ng-template #noCurrentOrders>
+    <div class="text-center">
+      <h4>No Current Orders</h4>
+      <button class="btn btn-primary" routerLink="/order">
+        Create New Order
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<h3>Past Orders</h3>
+<pizza-orders-table
+  [orders]="(orders$ | async)! | currentOrders"
+  (actionClicked)="onAction($event.action, $event.orderId)"
+></pizza-orders-table>
