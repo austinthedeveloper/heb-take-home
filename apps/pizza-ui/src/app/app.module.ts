@@ -9,12 +9,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UiModule } from '@pizza/ui';
 import { PizzaFormsModule } from '@pizza/forms';
 import { AuthInterceptorService } from '@pizza/services';
-import { APP_PIPES } from './pipes';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { PipesModule } from '@pizza/pipes';
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS, ...APP_PIPES],
+  declarations: [AppComponent, ...APP_CONTAINERS],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,6 +24,7 @@ import { environment } from '../environments/environment';
     UiModule,
     PizzaFormsModule,
     HttpClientModule,
+    PipesModule,
   ],
   providers: [
     { provide: 'environment', useValue: environment },
