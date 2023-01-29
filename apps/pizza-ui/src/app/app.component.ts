@@ -1,6 +1,7 @@
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { filter, map, tap } from 'rxjs';
+import { AuthService } from '@pizza/services';
 
 @Component({
   selector: 'pizza-root',
@@ -12,5 +13,11 @@ export class AppComponent {
     filter((event) => event instanceof NavigationEnd),
     map(() => this.route?.firstChild?.snapshot.data['pageTitle'])
   );
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  loggedIn$ = this.auth.loggedIn$;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private auth: AuthService
+  ) {}
 }

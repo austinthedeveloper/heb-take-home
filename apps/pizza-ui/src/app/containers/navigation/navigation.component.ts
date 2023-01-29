@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '@pizza/services';
 
 @Component({
   selector: 'pizza-navigation',
@@ -17,4 +19,11 @@ export class NavigationComponent {
       value: '/order',
     },
   ];
+
+  constructor(private auth: AuthService, private router: Router) {}
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
 }

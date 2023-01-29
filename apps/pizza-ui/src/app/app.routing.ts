@@ -4,16 +4,18 @@ import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderComponent } from './containers/order/order.component';
+import { AuthGuard } from '@pizza/services';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'orders',
+    redirectTo: 'login',
   },
   {
     path: 'orders',
     component: OrdersComponent,
+    canActivate: [AuthGuard],
     data: {
       pageTitle: 'Orders',
     },
@@ -21,6 +23,7 @@ const routes: Routes = [
   {
     path: 'order',
     component: OrderComponent,
+    canActivate: [AuthGuard],
     data: {
       pageTitle: 'Order',
     },
@@ -28,6 +31,7 @@ const routes: Routes = [
   {
     path: 'order/copy/:orderID',
     component: OrderComponent,
+    canActivate: [AuthGuard],
     data: {
       pageTitle: 'Copy Order',
       copy: true,
@@ -36,6 +40,7 @@ const routes: Routes = [
   {
     path: 'order/:orderID',
     component: OrderComponent,
+    canActivate: [AuthGuard],
     data: {
       pageTitle: 'Edit Order',
     },
