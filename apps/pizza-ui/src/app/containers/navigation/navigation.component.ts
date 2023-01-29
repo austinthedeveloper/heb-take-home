@@ -11,7 +11,7 @@ import { AuthService } from '@pizza/services';
 export class NavigationComponent {
   links = [
     {
-      key: 'Home',
+      key: 'Orders',
       value: '/orders',
     },
     {

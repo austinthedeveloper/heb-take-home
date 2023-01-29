@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderComponent } from './containers/order/order.component';
-import { AuthGuard } from '@pizza/services';
+import { AuthGuard, OrdersResolver } from '@pizza/services';
 
 const routes: Routes = [
   {
@@ -16,6 +16,7 @@ const routes: Routes = [
     path: 'orders',
     component: OrdersComponent,
     canActivate: [AuthGuard],
+    resolve: [OrdersResolver],
     data: {
       pageTitle: 'Orders',
     },

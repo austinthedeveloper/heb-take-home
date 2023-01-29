@@ -37,7 +37,7 @@ export class OrdersComponent {
         this.router.navigate(['/order/copy/', orderId]);
         break;
       case 'remove':
-        this.orderService.removeOrder(orderId);
+        this.orderService.removeOrder(orderId).subscribe();
         break;
     }
   }

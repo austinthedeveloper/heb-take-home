@@ -1,25 +1,44 @@
 import { ORDERS_MOCK } from '@pizza/data';
-import { PizzaOrder } from '@pizza/interfaces';
-import { Injectable } from '@angular/core';
+import { EnvironmentUI, PizzaOrder } from '@pizza/interfaces';
+import { Inject, Injectable } from '@angular/core';
 import { EntityClass } from 'behavior-subject-entities';
 import { BehaviorSubject, finalize, first, of, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService extends EntityClass<PizzaOrder> {
+  private apiUrl = `${this.environment.apiUrl}orders`;
   private saving = new BehaviorSubject(false);
   saving$ = this.saving.asObservable();
 
-  constructor() {
+  constructor(
+    private http: HttpClient,
+    @Inject('environment') private environment: EnvironmentUI
+  ) {
     super({ key: (order) => order.Order_ID.toString() });
-    this.addMany(ORDERS_MOCK);
+  }
+
+  getOrders() {
+    return this.http
+      .get<PizzaOrder[]>(this.apiUrl)
+      .pipe(tap((orders) => this.addMany(orders)));
   }
 
   removeOrder(orderId: number) {
-    this.removeOne(`${orderId}`);
+    return this.http
+      .delete(`${this.apiUrl}/${orderId}`)
+      .pipe(tap(() => this.removeOne(`${orderId}`)));
   }
 
+  /**
+   * This is faked since there is no UPDATE endpoint
+   *
+   * @param {PizzaOrder} order
+   * @return {*}
+   * @memberof OrderService
+   */
   saveOrder(order: PizzaOrder) {
     this.toggleSaving(true);
     return of(order).pipe(
@@ -32,13 +51,9 @@ export class OrderService extends EntityClass<PizzaOrder> {
   }
   createOrder(order: PizzaOrder) {
     this.toggleSaving(true);
-    const Order_ID = this.snapshot.items.length + 1;
-    return of(order).pipe(
-      first(),
+    return this.http.post<PizzaOrder>(this.apiUrl, order).pipe(
       finalize(() => this.toggleSaving(false)),
-      tap((res) =>
-        this.addOne({ ...res, Order_ID, Timestamp: new Date().toISOString() })
-      )
+      tap((res) => this.addOne(res))
     );
   }
 
