@@ -1,25 +1,8 @@
-<form *ngIf="form">
-  <pizza-form-select
-    [control]="form.controls.Table_No"
-    label="Table"
-    [items]="tables"
-  ></pizza-form-select>
-  <pizza-form-select
-    [control]="form.controls.Crust"
-    label="Crust"
-    [items]="crusts"
-  >
-  </pizza-form-select>
-  <pizza-form-select
-    [control]="form.controls.Size"
-    label="Size"
-    [items]="sizes"
-  ></pizza-form-select>
-  <pizza-form-select
-    [control]="form.controls.Flavor"
-    label="Flavor"
-    [items]="flavors"
-  ></pizza-form-select>
+<pizza-order-form
+  [order]="(order$ | async)!"
+  (formReady)="onFormReady($event)"
+></pizza-order-form>
+<ng-container *ngIf="form">
   <button
     class="btn btn-primary"
     [disabled]="form.invalid"
@@ -27,4 +10,4 @@
   >
     {{ submitText }}
   </button>
-</form>
+</ng-container>
