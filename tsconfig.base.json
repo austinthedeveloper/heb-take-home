@@ -19,6 +19,7 @@
       "@pizza/forms": ["libs/forms/src/index.ts"],
       "@pizza/interfaces": ["libs/interfaces/index.ts"],
       "@pizza/pipes": ["libs/pipes/src/index.ts"],
+      "@pizza/products/pizza": ["libs/products/pizza/src/index.ts"],
       "@pizza/services": ["libs/services/src/index.ts"],
       "@pizza/ui": ["libs/ui/src/index.ts"]
     }
