@@ -12,9 +12,10 @@ import { AuthInterceptorService } from '@pizza/services';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { PipesModule } from '@pizza/pipes';
+import { APP_COMPONENTS } from './components';
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS],
+  declarations: [AppComponent, ...APP_CONTAINERS, ...APP_COMPONENTS],
   imports: [
     BrowserModule,
     AppRoutingModule,

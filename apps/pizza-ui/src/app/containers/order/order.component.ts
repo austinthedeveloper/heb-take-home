@@ -1,15 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  PIZZA_TABLES,
-  PIZZA_SIZES,
-  PIZZA_CRUST,
-  PIZZA_FLAVORS,
-} from '@pizza/data';
 import { PizzaOrder } from '@pizza/interfaces';
 import { OrderService } from '@pizza/services';
-import { filter, map, Subscription, switchMap, tap } from 'rxjs';
+import { filter, map, Observable, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'pizza-order',
@@ -17,27 +11,24 @@ import { filter, map, Subscription, switchMap, tap } from 'rxjs';
   styleUrls: ['./order.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderComponent implements OnDestroy {
+export class OrderComponent {
   loading$ = this.orderService.saving$;
 
-  tables = PIZZA_TABLES;
-  sizes = PIZZA_SIZES;
-  crusts = PIZZA_CRUST;
-  flavors = PIZZA_FLAVORS;
-
-  form = this.fb.group({
-    Crust: this.fb.control('', Validators.required),
-    Flavor: this.fb.control('', Validators.required),
-    Size: this.fb.control('', Validators.required),
-    Table_No: this.fb.control<number>(1, Validators.required),
-  });
+  form!: FormGroup;
 
   private orderId$ = this.route.params.pipe(
     map((params) => params['orderID']),
     filter((orderId) => !!orderId)
   );
 
-  private sub!: Subscription;
+  order$: Observable<PizzaOrder> = this.orderId$.pipe(
+    tap((orderId) => {
+      this.canCopy = !!this.route.snapshot.data['copy'];
+      this.id = orderId;
+    }),
+    switchMap((orderId) => this.orderService.getOne(orderId))
+  );
+
   private canCopy = false;
   private id!: number;
 
@@ -46,31 +37,10 @@ export class OrderComponent implements OnDestroy {
     private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.setSub();
-  }
+  ) {}
 
-  ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
-  }
-
-  private setSub() {
-    this.sub = this.orderId$
-      .pipe(
-        tap((orderId) => {
-          this.canCopy = !!this.route.snapshot.data['copy'];
-          this.id = orderId;
-        }),
-        switchMap((orderId) => this.orderService.getOne(orderId)),
-        tap((order) => this.patchForm(order))
-      )
-      .subscribe();
-  }
-
-  private patchForm(order: PizzaOrder) {
-    this.form.patchValue(order);
+  onFormReady(form: FormGroup) {
+    this.form = form;
   }
 
   // TODO: I had to force these Partials to act as a full Interface which they are
