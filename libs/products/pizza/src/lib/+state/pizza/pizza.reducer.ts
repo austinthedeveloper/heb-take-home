@@ -1,12 +1,12 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
+import { Pizza } from '@pizza/interfaces';
 
 import * as PizzaActions from './pizza.actions';
-import { PizzaEntity } from './pizza.models';
 
 export const PIZZA_FEATURE_KEY = 'pizza';
 
-export interface PizzaState extends EntityState<PizzaEntity> {
+export interface PizzaState extends EntityState<Pizza> {
   selectedId?: string | number; // which Pizza record has been selected
   loaded: boolean; // has the Pizza list been loaded
   error?: string | null; // last known error (if any)
@@ -16,8 +16,7 @@ export interface PizzaPartialState {
   readonly [PIZZA_FEATURE_KEY]: PizzaState;
 }
 
-export const pizzaAdapter: EntityAdapter<PizzaEntity> =
-  createEntityAdapter<PizzaEntity>();
+export const pizzaAdapter: EntityAdapter<Pizza> = createEntityAdapter<Pizza>();
 
 export const initialPizzaState: PizzaState = pizzaAdapter.getInitialState({
   // set initial required properties

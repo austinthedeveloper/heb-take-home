@@ -1,11 +1,11 @@
 import { Action } from '@ngrx/store';
+import { Pizza } from '@pizza/interfaces';
 
 import * as PizzaActions from './pizza.actions';
-import { PizzaEntity } from './pizza.models';
 import { PizzaState, initialPizzaState, pizzaReducer } from './pizza.reducer';
 
 describe('Pizza Reducer', () => {
-  const createPizzaEntity = (id: string, name = ''): PizzaEntity => ({
+  const createPizzaEntity = (id: string, name = ''): Pizza => ({
     id,
     name: name || `name-${id}`,
   });

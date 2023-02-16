@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { PizzaEntity } from './pizza.models';
+import { Pizza } from '@pizza/interfaces';
 
 export const initPizza = createAction('[Pizza Page] Init');
 
 export const loadPizzaSuccess = createAction(
   '[Pizza/API] Load Pizza Success',
-  props<{ pizza: PizzaEntity[] }>()
+  props<{ pizza: Pizza[] }>()
 );
 
 export const loadPizzaFailure = createAction(
