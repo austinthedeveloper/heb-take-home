@@ -13,6 +13,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { PipesModule } from '@pizza/pipes';
 import { APP_COMPONENTS } from './components';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS, ...APP_COMPONENTS],
@@ -26,6 +28,17 @@ import { APP_COMPONENTS } from './components';
     PizzaFormsModule,
     HttpClientModule,
     PipesModule,
+    StoreModule.forRoot(
+      {},
+      {
+        metaReducers: [],
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+        },
+      }
+    ),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     { provide: 'environment', useValue: environment },
