@@ -27,7 +27,8 @@
       "executor": "@nrwl/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "graphy-api:build"
+        "buildTarget": "graphy-api:build",
+        "port": 3333
       },
       "configurations": {
         "development": {
