@@ -1,0 +1,33 @@
+<div class="browse">
+  <h1>Browse Characters</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Homeworld</th>
+      <th>Species</th>
+    </tr>
+    <tr *ngFor="let character of characters">
+      <td>
+        <a
+          [routerLink]="['/character']"
+          [queryParams]="{ name: character.name }"
+          >{{ character.name }}</a
+        >
+      </td>
+      <td>{{ character.homeworld }}</td>
+      <td>
+        <a
+          [routerLink]="['/species']"
+          [queryParams]="{ name: character.species }"
+          >{{ character.species }}</a
+        >
+      </td>
+    </tr>
+  </table>
+  <div class="pager">
+    <button class="prev" *ngIf="showPrevious()" (click)="onPrevious()">
+      prev
+    </button>
+    <button class="next" *ngIf="showNext()" (click)="onNext()">next</button>
+  </div>
+</div>

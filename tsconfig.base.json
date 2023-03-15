@@ -10,7 +10,7 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2017", "dom", "esnext.asynciterable"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -22,7 +22,8 @@
       "@pizza/products/pizza": ["libs/products/pizza/src/index.ts"],
       "@pizza/services": ["libs/services/src/index.ts"],
       "@pizza/ui": ["libs/ui/src/index.ts"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "tmp"]
 }

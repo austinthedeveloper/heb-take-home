@@ -1,0 +1,10 @@
+<div *ngIf="character">
+  <p><strong>Name:</strong> {{ character.name }}</p>
+  <p><strong>Mass:</strong> {{ character.mass }}</p>
+  <p><strong>Hair Color:</strong> {{ character.hair_color }}</p>
+  <p><strong>Skin Color:</strong> {{ character.skin_color }}</p>
+  <p><strong>Eye Color:</strong> {{ character.eye_color }}</p>
+  <p><strong>Birth Year:</strong> {{ character.birth_year }}</p>
+  <p><strong>Gender:</strong> {{ character.gender }}</p>
+</div>
+<a [routerLink]="['/']">Back</a>
