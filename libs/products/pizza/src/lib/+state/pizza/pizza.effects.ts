@@ -37,6 +37,18 @@ export class PizzaEffects {
       })
     )
   );
+
+  removePizza$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PizzaActions.removePizza),
+      switchMap((props) => this.orderService.removeOrder(props.pizzaId)),
+      switchMap((pizzaId) => of(PizzaActions.removePizzaSuccess({ pizzaId }))),
+      catchError((error) => {
+        console.error('Error', error);
+        return of(PizzaActions.updatePizzaFailure({ error }));
+      })
+    )
+  );
   createPizza$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PizzaActions.createPizza),

@@ -1,13 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { PizzaOrder } from '@pizza/interfaces';
-import { OrderService } from '@pizza/services';
-import {
-  initPizza,
-  selectAllPizza,
-  selectPizzaEntities,
-} from '@pizza/products/pizza';
+import { initPizza, removePizza, selectAllPizza } from '@pizza/products/pizza';
+
 @Component({
   selector: 'pizza-orders',
   templateUrl: './orders.component.html',
@@ -31,11 +26,7 @@ export class OrdersComponent {
     },
   ];
 
-  constructor(
-    private orderService: OrderService,
-    private router: Router,
-    private store: Store
-  ) {
+  constructor(private router: Router, private store: Store) {
     this.store.dispatch(initPizza());
   }
 
@@ -48,7 +39,7 @@ export class OrdersComponent {
         this.router.navigate(['/order/copy/', orderId]);
         break;
       case 'remove':
-        this.orderService.removeOrder(orderId).subscribe();
+        this.store.dispatch(removePizza({ pizzaId: orderId }));
         break;
     }
   }

@@ -2,7 +2,15 @@ import { ORDERS_MOCK } from '@pizza/data';
 import { EnvironmentUI, PizzaOrder } from '@pizza/interfaces';
 import { Inject, Injectable } from '@angular/core';
 import { EntityClass } from 'behavior-subject-entities';
-import { BehaviorSubject, finalize, first, of, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  finalize,
+  first,
+  map,
+  of,
+  tap,
+  Observable,
+} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -26,10 +34,11 @@ export class OrderService extends EntityClass<PizzaOrder> {
       .pipe(tap((orders) => this.addMany(orders)));
   }
 
-  removeOrder(orderId: number) {
-    return this.http
-      .delete(`${this.apiUrl}/${orderId}`)
-      .pipe(tap(() => this.removeOne(`${orderId}`)));
+  removeOrder(orderId: number): Observable<number> {
+    return this.http.delete(`${this.apiUrl}/${orderId}`).pipe(
+      tap(() => this.removeOne(`${orderId}`)),
+      map(() => orderId)
+    );
   }
 
   /**

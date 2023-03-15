@@ -40,6 +40,13 @@ const reducer = createReducer(
   on(PizzaActions.createPizzaSuccess, (state, { pizza }) =>
     pizzaAdapter.addOne(pizza, { ...state, loaded: true })
   ),
+  on(PizzaActions.removePizzaSuccess, (state, { pizzaId }) =>
+    pizzaAdapter.removeOne(pizzaId, { ...state, loaded: true })
+  ),
+  on(PizzaActions.setActivePizza, (state, { pizzaId }) => ({
+    ...state,
+    selectedId: pizzaId,
+  })),
   on(PizzaActions.loadPizzaFailure, (state, { error }) => ({ ...state, error }))
 );
 

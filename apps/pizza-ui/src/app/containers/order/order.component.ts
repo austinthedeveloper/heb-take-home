@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { PizzaOrder } from '@pizza/interfaces';
-import { OrderService } from '@pizza/services';
+import {
+  createPizza,
+  selectEntity,
+  setActivePizza,
+  updatePizza,
+} from '@pizza/products/pizza';
 import { filter, map, Observable, switchMap, tap } from 'rxjs';
-import { updatePizza, createPizza } from '@pizza/products/pizza';
 
 @Component({
   selector: 'pizza-order',
@@ -14,8 +18,6 @@ import { updatePizza, createPizza } from '@pizza/products/pizza';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderComponent {
-  loading$ = this.orderService.saving$;
-
   form!: FormGroup;
 
   private orderId$ = this.route.params.pipe(
@@ -23,24 +25,21 @@ export class OrderComponent {
     filter((orderId) => !!orderId)
   );
 
-  order$: Observable<PizzaOrder> = this.orderId$.pipe(
+  order$: Observable<PizzaOrder | undefined> = this.orderId$.pipe(
     tap((orderId) => {
       this.canCopy = !!this.route.snapshot.data['copy'];
       this.id = orderId;
+      this.store.dispatch(setActivePizza({ pizzaId: this.id }));
     }),
-    switchMap((orderId) => this.orderService.getOne(orderId))
+    switchMap((orderId) => this.store.select(selectEntity))
   );
 
   private canCopy = false;
   private id!: number;
 
-  constructor(
-    private fb: NonNullableFormBuilder,
-    private orderService: OrderService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private store: Store
-  ) {}
+  constructor(private route: ActivatedRoute, private store: Store) {
+    this.store.select(selectEntity).subscribe((res) => console.log('res', res));
+  }
 
   onFormReady(form: FormGroup) {
     this.form = form;

@@ -13,6 +13,11 @@ export const loadPizzaFailure = createAction(
   props<{ error: any }>()
 );
 
+export const setActivePizza = createAction(
+  '[Pizza/API] Set Active Pizza',
+  props<{ pizzaId: any }>()
+);
+
 export const updatePizza = createAction(
   '[Pizza/API] Update Pizza',
   props<{ pizza: PizzaOrder }>()
@@ -40,5 +45,20 @@ export const createPizzaSuccess = createAction(
 
 export const createPizzaFailure = createAction(
   '[Pizza/API] Create Pizza Failure',
+  props<{ error: any }>()
+);
+
+export const removePizza = createAction(
+  '[Pizza/API] Remove Pizza',
+  props<{ pizzaId: any }>()
+);
+
+export const removePizzaSuccess = createAction(
+  '[Pizza/API] Remove Pizza Success',
+  props<{ pizzaId: any }>()
+);
+
+export const removePizzaFailure = createAction(
+  '[Pizza/API] Remove Pizza Failure',
   props<{ error: any }>()
 );
