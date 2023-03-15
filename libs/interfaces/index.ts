@@ -3,3 +3,4 @@ export * from './key-value.interface';
 export * from './login.interface';
 export * from './order.inteface';
 export * from './pizza.interface';
+export * from './star-wars.interface';
