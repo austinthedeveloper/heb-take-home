@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+.browse {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.browse > * {
+  width: 100%;
+  max-width: 800px;
+}
+
+table {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border-collapse: collapse;
+  border: 1px solid #bbbbbb;
+}
+
+tr:nth-child(odd) {
+  background-color: #dddddd;
+}
+
+th, td {
+  padding: 4px 8px;
+  border-right: 1px solid #bbbbbb;
+  border-left: 1px solid #bbbbbb;
+}
+
+.prev {
+  float: left;
+}
+
+.next {
+  float: right;
+}

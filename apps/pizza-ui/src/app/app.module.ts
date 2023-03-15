@@ -13,7 +13,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { PipesModule } from '@pizza/pipes';
 import { APP_COMPONENTS } from './components';
-import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS, ...APP_COMPONENTS],
@@ -27,7 +26,6 @@ import { GraphQLModule } from './graphql.module';
     PizzaFormsModule,
     HttpClientModule,
     PipesModule,
-    GraphQLModule,
   ],
   providers: [
     { provide: 'environment', useValue: environment },
