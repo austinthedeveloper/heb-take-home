@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,6 +15,8 @@ import { PipesModule } from '@pizza/pipes';
 import { APP_COMPONENTS } from './components';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { ProductsPizzaModule } from '@pizza/products/pizza';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS, ...APP_COMPONENTS],
@@ -28,6 +30,13 @@ import { EffectsModule } from '@ngrx/effects';
     PizzaFormsModule,
     HttpClientModule,
     PipesModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: !isDevMode(), // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+      trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
+      traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
+    }),
     StoreModule.forRoot(
       {},
       {
@@ -39,6 +48,7 @@ import { EffectsModule } from '@ngrx/effects';
       }
     ),
     EffectsModule.forRoot([]),
+    ProductsPizzaModule,
   ],
   providers: [
     { provide: 'environment', useValue: environment },

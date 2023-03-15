@@ -1,8 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { PizzaOrder } from '@pizza/interfaces';
 import { OrderService } from '@pizza/services';
-
+import {
+  initPizza,
+  selectAllPizza,
+  selectPizzaEntities,
+} from '@pizza/products/pizza';
 @Component({
   selector: 'pizza-orders',
   templateUrl: './orders.component.html',
@@ -10,7 +15,7 @@ import { OrderService } from '@pizza/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersComponent {
-  orders$ = this.orderService.items$;
+  orders$ = this.store.select(selectAllPizza);
   actions = [
     {
       key: 'Edit',
@@ -26,7 +31,13 @@ export class OrdersComponent {
     },
   ];
 
-  constructor(private orderService: OrderService, private router: Router) {}
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private store: Store
+  ) {
+    this.store.dispatch(initPizza());
+  }
 
   onAction(action: string, orderId: number) {
     switch (action) {

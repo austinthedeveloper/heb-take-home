@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { PizzaOrder } from '@pizza/interfaces';
 import { OrderService } from '@pizza/services';
 import { filter, map, Observable, switchMap, tap } from 'rxjs';
+import { updatePizza, createPizza } from '@pizza/products/pizza';
 
 @Component({
   selector: 'pizza-order',
@@ -36,7 +38,8 @@ export class OrderComponent {
     private fb: NonNullableFormBuilder,
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   onFormReady(form: FormGroup) {
@@ -45,17 +48,27 @@ export class OrderComponent {
 
   // TODO: I had to force these Partials to act as a full Interface which they are
   submitForm(order: Partial<PizzaOrder>) {
-    let call = this.orderService.createOrder(order as PizzaOrder);
+    // TODO: Table_No keeps converting to a string
+    const updatedOrder = {
+      ...order,
+      Table_No: +(order.Table_No as number),
+    };
     if (this.id && !this.canCopy) {
-      call = this.orderService.saveOrder({
-        ...order,
-        Order_ID: this.id,
-      } as PizzaOrder);
+      this.store.dispatch(
+        updatePizza({
+          pizza: {
+            ...updatedOrder,
+            Order_ID: this.id,
+          } as PizzaOrder,
+        })
+      );
+    } else {
+      this.store.dispatch(
+        createPizza({
+          pizza: updatedOrder as PizzaOrder,
+        })
+      );
     }
-
-    call.subscribe(() => {
-      this.router.navigate(['/orders']);
-    });
   }
 
   // TODO: Convert to a pipe so it doesn't fire as often
