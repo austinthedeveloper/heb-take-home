@@ -14,7 +14,9 @@
         "main": "apps/pizza-api/src/main.ts",
         "tsConfig": "apps/pizza-api/tsconfig.app.json",
         "assets": ["apps/pizza-api/src/assets"],
-        "webpackConfig": "apps/pizza-api/webpack.config.js"
+        "webpackConfig": "apps/pizza-api/webpack.config.js",
+        "isolatedConfig": true,
+        "babelUpwardRootMode": true
       },
       "configurations": {
         "production": {
