@@ -1,22 +1,12 @@
-import { ORDERS_MOCK } from '@pizza/data';
-import { EnvironmentUI, PizzaOrder } from '@pizza/interfaces';
-import { Inject, Injectable } from '@angular/core';
-import { EntityClass } from 'behavior-subject-entities';
-import {
-  BehaviorSubject,
-  finalize,
-  first,
-  map,
-  of,
-  tap,
-  Observable,
-} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { EnvironmentUI, PizzaOrder } from '@pizza/interfaces';
+import { BehaviorSubject, finalize, first, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OrderService extends EntityClass<PizzaOrder> {
+export class OrderService {
   private apiUrl = `${this.environment.apiUrl}orders`;
   private saving = new BehaviorSubject(false);
   saving$ = this.saving.asObservable();
@@ -24,21 +14,16 @@ export class OrderService extends EntityClass<PizzaOrder> {
   constructor(
     private http: HttpClient,
     @Inject('environment') private environment: EnvironmentUI
-  ) {
-    super({ key: (order) => order.Order_ID.toString() });
-  }
+  ) {}
 
   getOrders() {
-    return this.http
-      .get<PizzaOrder[]>(this.apiUrl)
-      .pipe(tap((orders) => this.addMany(orders)));
+    return this.http.get<PizzaOrder[]>(this.apiUrl);
   }
 
   removeOrder(orderId: number): Observable<number> {
-    return this.http.delete(`${this.apiUrl}/${orderId}`).pipe(
-      tap(() => this.removeOne(`${orderId}`)),
-      map(() => orderId)
-    );
+    return this.http
+      .delete(`${this.apiUrl}/${orderId}`)
+      .pipe(map(() => orderId));
   }
 
   /**
@@ -52,18 +37,14 @@ export class OrderService extends EntityClass<PizzaOrder> {
     this.toggleSaving(true);
     return of(order).pipe(
       first(),
-      finalize(() => this.toggleSaving(false)),
-      tap((res) =>
-        this.updateOne({ ...res, Timestamp: new Date().toISOString() })
-      )
+      finalize(() => this.toggleSaving(false))
     );
   }
   createOrder(order: PizzaOrder) {
     this.toggleSaving(true);
-    return this.http.post<PizzaOrder>(this.apiUrl, order).pipe(
-      finalize(() => this.toggleSaving(false)),
-      tap((res) => this.addOne(res))
-    );
+    return this.http
+      .post<PizzaOrder>(this.apiUrl, order)
+      .pipe(finalize(() => this.toggleSaving(false)));
   }
 
   toggleSaving(value: boolean) {

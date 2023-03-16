@@ -1,10 +1,10 @@
-import { LoginComponent } from './containers/login/login.component';
-import { OrdersComponent } from './containers/orders/orders.component';
-import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@pizza/services';
+
+import { LoginComponent } from './containers/login/login.component';
 import { OrderComponent } from './containers/order/order.component';
-import { AuthGuard, OrdersResolver } from '@pizza/services';
+import { OrdersComponent } from './containers/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -16,7 +16,6 @@ const routes: Routes = [
     path: 'orders',
     component: OrdersComponent,
     canActivate: [AuthGuard],
-    resolve: [OrdersResolver],
     data: {
       pageTitle: 'Orders',
     },

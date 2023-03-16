@@ -5,7 +5,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
@@ -26,10 +26,6 @@ export class AuthInterceptorService implements HttpInterceptor {
       });
     }
 
-    return next.handle(request).pipe(
-      catchError((err) => {
-        return throwError(err);
-      })
-    );
+    return next.handle(request);
   }
 }
