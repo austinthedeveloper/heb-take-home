@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "nx",
     "start:ui": "nx serve pizza-ui",
+    "build:ui:prod": "nx build pizza-ui --prod",
     "start:graphy": "nx serve graphy",
     "start:graphy-api": "nx serve graphy-api",
     "start:api": "nx serve pizza-api"
