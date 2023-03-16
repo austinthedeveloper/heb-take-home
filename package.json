@@ -4,11 +4,14 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
+    "nest": "nest",
     "start:ui": "nx serve pizza-ui",
     "build:ui:prod": "nx build pizza-ui --prod",
+    "build:api:prod": "nx build pizza-api --prod && func host start",
     "start:graphy": "nx serve graphy",
     "start:graphy-api": "nx serve graphy-api",
-    "start:api": "nx serve pizza-api"
+    "start:api": "nx serve pizza-api",
+    "start:azure": "npm run build && func host start"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +25,9 @@
     "@angular/router": "15.2.2",
     "@apollo/client": "^3.0.0",
     "@apollo/server": "^4.5.0",
+    "@azure/functions": "^1.0.3",
     "@nestjs/apollo": "^11.0.3",
+    "@nestjs/azure-func-http": "^0.9.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^11.0.0",

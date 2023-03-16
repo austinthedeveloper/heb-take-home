@@ -22,7 +22,13 @@
         "production": {
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/pizza-api/src/main.ts",
+              "with": "apps/pizza-api/src/main.azure.ts"
+            }
+          ]
         }
       }
     },
