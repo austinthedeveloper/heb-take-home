@@ -7,11 +7,11 @@
     "nest": "nest",
     "start:ui": "nx serve pizza-ui",
     "build:ui:prod": "nx build pizza-ui --prod",
-    "build:api:prod": "nx build pizza-api --prod && func host start",
+    "build:api:prod": "nx build pizza-api --prod",
     "start:graphy": "nx serve graphy",
     "start:graphy-api": "nx serve graphy-api",
     "start:api": "nx serve pizza-api",
-    "start:azure": "npm run build && func host start"
+    "start:azure": "nx build pizza-api --prod && func host start"
   },
   "private": true,
   "dependencies": {

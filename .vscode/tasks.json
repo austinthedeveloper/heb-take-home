@@ -12,7 +12,7 @@
 		{
 			"type": "shell",
 			"label": "npm build (functions)",
-			"command": "npm run build",
+			"command": "npm run build:api:prod",
 			"dependsOn": "npm install (functions)",
 			"problemMatcher": "$tsc"
 		},

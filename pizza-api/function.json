@@ -13,5 +13,6 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/apps/pizza-api/main.js"
+  "scriptFile": "../dist/apps/pizza-api/main.js",
+  "entryPoint": "startAzure"
 }
