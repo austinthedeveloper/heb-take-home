@@ -24,6 +24,12 @@
       },
       "configurations": {
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pizza-ui/src/environments/environment.ts",
+              "with": "apps/pizza-ui/src/environments/environment.prod.ts"
+            }
+          ],
           "budgets": [
             {
               "type": "initial",
@@ -58,6 +64,9 @@
         "development": {
           "browserTarget": "pizza-ui:build:development"
         }
+      },
+      "options": {
+        "proxyConfig": "apps/pizza-ui/proxy.conf.json"
       },
       "defaultConfiguration": "development"
     },

@@ -6,6 +6,7 @@
     "ng": "nx",
     "nest": "nest",
     "start:ui": "nx serve pizza-ui",
+    "start:ui:prod": "nx serve pizza-ui --prod",
     "build:ui:prod": "nx build pizza-ui --prod",
     "build:api:prod": "nx build pizza-api --prod",
     "start:graphy": "nx serve graphy",
